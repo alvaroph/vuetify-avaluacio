@@ -4,6 +4,7 @@ export interface TActividad {
     descripcion: string;
     uf: number; 
 }
+
 export interface TAlumnoActividad{
     id: number;
     id_alumno: number;
@@ -12,7 +13,7 @@ export interface TAlumnoActividad{
 
 }
 
-export interface Talumno {
+export interface TAlumno {
     id: number;
     nombre: string;
     apellido: string;

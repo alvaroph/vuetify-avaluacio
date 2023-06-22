@@ -1,31 +1,40 @@
 <template>
   <HelloWorld />
+  <v-table>
+    <thead>
+      <tr>
+        <th>Alumno</th>
+        <th v-for="actividad in actividades" v-bind:key="actividad.id">
+          {{ actividad.nombre }}
+        </th>
+      </tr>
+      </thead>
+      <tr v-for="alumno in alumnos" v-bind:key="alumno.id">
+        <th> {{ alumno.nombre }}</th>
+        <td v-for="actividad in actividades" v-bind:key="actividad.id">
+          <caja-nota :alumno="alumno" :actividad="actividad"></caja-nota>
+        </td>
+      </tr>
+</v-table>
 
-  <div v-for="alumno in alumnos" v-bind:key="alumno.id">
-    alumno: {{ alumno.id }} - {{ alumno.nombre }}
-    <div v-for="actividad in alumno.ALUMNO_ACTIVIDAD" v-bind:key="actividad.id">
-      {{actividad.id}} - {{ actividad.id_actividad.nombre }} - {{ actividad.nota }}
-    </div>
-  </div>
-
-  <v-data-table :headers="headers" :items="alumnos">
-    <template v-slot:items="props">
-      <td>{{ props.item.nombre }}</td>
-      </template>
-    
-  </v-data-table>
+ 
 </template>
 
 <script lang="ts">
 
-  
-  import {Talumno} from '@/components/interfaces';
+
+  import {TAlumno, TActividad} from '@/components/interfaces';
+  import CajaNota from '@/components/CajaNota.vue';
 //  import HelloWorld from '@/components/HelloWorld.vue';
   import  { defineComponent } from "vue";
   export default defineComponent({
+    components: {
+    CajaNota
+  },
   data() {
     return {
-      alumnos:  [] as Talumno[],
+      actividades: [] as TActividad[],
+      alumnos:  [] as TAlumno[],
       headers: [{ title: 'Nombre', value: 'nombre' }] 
 
     } }
@@ -35,6 +44,12 @@
         .then(response => response.json())
         .then(json => {console.log(json);
           this.alumnos = json.records;
+        });
+
+        fetch('http://20.58.18.201/api.php/records/ACTIVIDAD')
+        .then(response => response.json())
+        .then(json => {console.log(json);
+          this.actividades = json.records;
         });
     }
  });
