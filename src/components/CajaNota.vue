@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-    import {TAlumno, TActividad} from '@/components/interfaces';
+    import {TAlumno, TActividad} from './interfaces';
     import { defineComponent } from 'vue';
     import type { PropType } from 'vue';
 
@@ -21,7 +21,7 @@
             return {
             'pass': this.notaActual> 5,
             'fail': this.notaActual<= 5,
-            'missing': this.notaActual=='n.d.' 
+          //  'missing': this.notaActual=='n.d.' 
            }
         },
         nota(): any{

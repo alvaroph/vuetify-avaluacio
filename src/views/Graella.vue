@@ -8,5 +8,17 @@
   <script lang="ts" >
     console.log("Esto es la grilla");
     
+  import  { defineComponent } from "vue";
+  export default defineComponent({
+    components: {
+    
+  },
+  data() {
+    return {
+    
+
+    } }
+    
+ });
   </script>
   
