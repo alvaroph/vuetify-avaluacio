@@ -27,6 +27,8 @@
   import CajaNota from '../components/CajaNota.vue';
 //  import HelloWorld from '@/components/HelloWorld.vue';
   import  { defineComponent } from "vue";
+  import {avaluacioApi} from '../components/api/avaluacio.api';
+
   export default defineComponent({
     components: {
     CajaNota
@@ -40,17 +42,25 @@
     } }
     ,created() {
       console.log('created')
-      fetch('http://20.58.18.201/api.php/records/ALUMNO?join=ALUMNO_ACTIVIDAD,ACTIVIDAD')
+      avaluacioApi.getAlumnosNotas().then((alumnos) => {
+        this.alumnos = alumnos.records;
+      });
+
+   /*   fetch('http://20.58.18.201/api.php/records/ALUMNO?join=ALUMNO_ACTIVIDAD,ACTIVIDAD')
         .then(response => response.json())
         .then(json => {console.log(json);
           this.alumnos = json.records;
-        });
+        });*/
 
-        fetch('http://20.58.18.201/api.php/records/ACTIVIDAD')
-        .then(response => response.json())
-        .then(json => {console.log(json);
-          this.actividades = json.records;
-        });
+
+        avaluacioApi.getActividad().then((actividades) => {
+        this.actividades = actividades.records;
+       });
+      //   fetch('http://20.58.18.201/api.php/records/ACTIVIDAD')
+      //   .then(response => response.json())
+      //   .then(json => {console.log(json);
+      //     this.actividades = json.records;
+      //   });
     }
  });
 </script>

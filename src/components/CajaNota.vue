@@ -6,10 +6,9 @@
     import {TAlumno, TActividad} from './interfaces';
     import { defineComponent } from 'vue';
     import type { PropType } from 'vue';
+    import {avaluacioApi} from './api/avaluacio.api';
 
     export default defineComponent({
-        
-
 
     // type inference enabled
     props: {
@@ -19,8 +18,8 @@
     computed: {
         classObject() {
             return {
-            'pass': this.notaActual> 5,
-            'fail': this.notaActual<= 5,
+            'pass': this.notaActual>= 5,
+            'fail': this.notaActual< 5,
           //  'missing': this.notaActual=='n.d.' 
            }
         },
@@ -34,6 +33,8 @@
         ,
     data() {
     return {
+      nota_puesta: false as boolean,
+      id_nota: 0 as number,
       notaActual: 0 as number,
       actividades: [] as TActividad[],
       alumnos:  [] as TAlumno[],
@@ -45,15 +46,23 @@
             console.log("actualitzaNota")
             //dependiendo de si la nota estaba puesta o no, habrá que hacer un POST o un PUT
             //si la nota estaba puesta, habrá que hacer un PUT
-            if (this.getNota()=="n.d."){
-                fetch('http://20.58.18.201/api.php/records/ALUMNO_ACTIVIDAD',
-                {method: 'POST'
-                , body: JSON.stringify({
-                    "id_alumno": this.alumno.id,
-                    "id_actividad": this.actividad.id,
-                    "nota": this.notaActual
-                })
-                })
+            if (1===1){
+
+            avaluacioApi.setAlumnoActividades({
+                                "id": this.getNota()[1],
+                                "id_alumno": this.alumno.id,
+                                "id_actividad": this.actividad.id,
+                                "nota": this.notaActual
+                            },(this.getNota()[0]=="n.d.") ? "POST" : "PUT");
+
+                // fetch('http://20.58.18.201/api.php/records/ALUMNO_ACTIVIDAD',
+                // {method: 'POST'
+                // , body: JSON.stringify({
+                //     "id_alumno": this.alumno.id,
+                //     "id_actividad": this.actividad.id,
+                //     "nota": this.notaActual
+                // })
+                // })
             }
             else{
                 console.log("PUT")
@@ -68,11 +77,12 @@
         const nota = this.alumno.ALUMNO_ACTIVIDAD.find(
           (alumnoActividad) => alumnoActividad.id_actividad.id === this.actividad.id
         );
-        return nota ? nota.nota : "n.d.";
+        return nota ? [nota.nota,nota.id ] :  ["n.d.",0];
       },
     },
     created() {
-        this.notaActual=this.getNota()
+        [this.notaActual, this.id_nota]=this.getNota()
+        
     },
     
  });
