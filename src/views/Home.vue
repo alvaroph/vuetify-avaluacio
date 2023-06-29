@@ -10,12 +10,12 @@
       </tr>
       </thead>
       <tr v-for="alumno in alumnos" v-bind:key="alumno.id">
-        <th> {{ alumno.nombre }}</th>
+        <th> {{ alumno.nombre }}&nbsp;{{ alumno.apellidos }}</th>
         <td v-for="actividad in actividades" v-bind:key="actividad.id">
           <caja-nota :alumno="alumno" :actividad="actividad"></caja-nota>
         </td>
       </tr>
-</v-table>
+  </v-table>
 
  
 </template>
@@ -25,7 +25,6 @@
 
   import {TAlumno, TActividad} from '../components/interfaces';
   import CajaNota from '../components/CajaNota.vue';
-//  import HelloWorld from '@/components/HelloWorld.vue';
   import  { defineComponent } from "vue";
   import {avaluacioApi} from '../components/api/avaluacio.api';
 
@@ -46,21 +45,10 @@
         this.alumnos = alumnos.records;
       });
 
-   /*   fetch('http://20.58.18.201/api.php/records/ALUMNO?join=ALUMNO_ACTIVIDAD,ACTIVIDAD')
-        .then(response => response.json())
-        .then(json => {console.log(json);
-          this.alumnos = json.records;
-        });*/
-
-
         avaluacioApi.getActividad().then((actividades) => {
         this.actividades = actividades.records;
        });
-      //   fetch('http://20.58.18.201/api.php/records/ACTIVIDAD')
-      //   .then(response => response.json())
-      //   .then(json => {console.log(json);
-      //     this.actividades = json.records;
-      //   });
+      
     }
  });
 </script>

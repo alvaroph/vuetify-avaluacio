@@ -1,24 +1,81 @@
 <template>
-    <div>
-      <h1>Grilla</h1>
-      <p>Esto es la grilla</p>
-    </div>
-  </template>
-  
-  <script lang="ts" >
-    console.log("Esto es la grilla");
-    
+
+  <v-table>
+    <thead>
+      <tr>
+        <th>RA</th>
+        <th v-for="actividad in actividades" v-bind:key="actividad.id">
+          {{ actividad.nombre }}
+        </th>
+      </tr>
+      </thead>
+        <tr v-for="(fila) in matriz" v-bind:key="fila.codigo">
+        <th> {{ fila.codigo }}</th>
+        <td v-for="(actual,index)  in fila.pcts" v-bind:key="index">
+          <caja-pct :pct="actual.pct" :id_nota="actual.id_nota" :ra="fila.id" :actividad="actividades[index]"></caja-pct>         
+        </td>
+      <!--td>{{totalPctRA(1)}}</!--td-->
+      </tr>
+      <!--tr v-for="ra in ras" v-bind:key="ra.id">
+        <th> {{ ra.codigo }}</th>
+        <td v-for="actividad in actividades" v-bind:key="actividad.id">
+          <caja-pct :ra="ra" :actividad="actividad"></caja-pct>         
+        </td>
+      </!--tr-->
+  </v-table>
+</template>
+
+<script lang="ts">
+  import {TAlumno, TActividad, TRa, TRActividad} from '../components/interfaces';
+  import CajaPct from '../components/CajaPct.vue';
   import  { defineComponent } from "vue";
+  import {avaluacioApi} from '../components/api/avaluacio.api';
+
   export default defineComponent({
     components: {
-    
+    CajaPct
   },
   data() {
     return {
-    
-
+      actividades: [] as TActividad[],
+      alumnos:  [] as TAlumno[],
+      headers: [{ title: 'Nombre', value: 'nombre' }],
+      ras: [] as TRa[],
+      matriz: [] as any[]
     } }
-    
+  //NO FUNCIONA EL COMPUTER
+    // ,computed: {
+    //  totalPctRA(i:any): any {
+    //         return (this.matriz[i].pcts.reduce((total: number , item :any) => total + item.porcentaje, 0))
+    //    }
+    // }
+    ,created() {
+      console.log('created')
+      avaluacioApi.getRaActividad().then((pcts) => {
+        this.ras = pcts.records;
+
+              avaluacioApi.getActividad().then((actividades) => {
+              this.actividades = actividades.records;
+
+                    this.ras.forEach((ra: TRa) => {
+                    console.log("paso");        
+                    let pctTemp= this.actividades.map((actividad: any) => {
+                      const pct = ra.ACTIVIDAD_RA.find(
+                                (raActividad : TRActividad) => raActividad.id_actividad.id === actividad.id
+                        );           
+                        return pct ? {pct: pct.porcentaje , id_nota:pct.id} : -1;
+                    });
+                    this.matriz.push({codigo: ra.codigo , id:ra.id , pcts: pctTemp});
+            });
+
+            });
+            
+       
+      });
+
+       
+     
+       
+    }
  });
-  </script>
-  
+</script>

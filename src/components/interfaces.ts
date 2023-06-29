@@ -1,3 +1,5 @@
+//import exp from "constants";
+
 export interface TActividad {
     id: number;
     nombre: string;
@@ -16,8 +18,24 @@ export interface TAlumnoActividad{
 export interface TAlumno {
     id: number;
     nombre: string;
-    apellido: string;
+    apellidos: string;
     curso: string;
     ALUMNO_ACTIVIDAD: TAlumnoActividad[];
 
+}
+
+export interface TRActividad {
+    id: number;
+    id_ra: number;
+    id_actividad: TActividad;
+    porcentaje: number;
+}
+
+
+export interface TRa {
+    id: number;
+    codigo: string;
+    nombre: string;
+    pct_uf: number;
+    ACTIVIDAD_RA: TRActividad[]
 }
