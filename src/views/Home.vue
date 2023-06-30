@@ -45,7 +45,7 @@
         this.alumnos = alumnos.records;
       });
 
-        avaluacioApi.getActividad().then((actividades) => {
+        avaluacioApi.getActividades().then((actividades) => {
         this.actividades = actividades.records;
        });
       

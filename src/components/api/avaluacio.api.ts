@@ -13,8 +13,12 @@ export default class AvaluacioApiService{
         return response.json()
     }
 
-    async getActividad() {
+    async getActividades() {
         return await this.fetchCall(`${this.baseUrl}/ACTIVIDAD`, 'GET')
+    }
+
+    async getAlumnos() {
+        return await this.fetchCall(`${this.baseUrl}/ALUMNO`, 'GET')
     }
 
     async getAlumnosNotas() {

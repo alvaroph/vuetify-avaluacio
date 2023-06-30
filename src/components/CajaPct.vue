@@ -30,12 +30,11 @@
         ,
     data() {
         return {
-        nota_puesta: false as boolean,
-        pctActual: 0 as number,
-        actividades: [] as TActividad[],
-        alumnos:  [] as TAlumno[],
-        headers: [{ title: 'Nombre', value: 'nombre' }] 
-
+            nota_puesta: false as boolean,
+            pctActual: 0 as number,
+            actividades: [] as TActividad[],
+            alumnos:  [] as TAlumno[],
+            headers: [{ title: 'Nombre', value: 'nombre' }] 
         } 
     },
     methods: {

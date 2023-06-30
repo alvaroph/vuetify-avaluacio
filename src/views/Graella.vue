@@ -54,7 +54,7 @@
       avaluacioApi.getRaActividad().then((pcts) => {
         this.ras = pcts.records;
 
-              avaluacioApi.getActividad().then((actividades) => {
+              avaluacioApi.getActividades().then((actividades) => {
               this.actividades = actividades.records;
 
                     this.ras.forEach((ra: TRa) => {
