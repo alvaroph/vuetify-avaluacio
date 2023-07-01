@@ -91,11 +91,10 @@
         },
       }),
       methods: {
-        loginUser() {
+        loginUser: async function(){
           console.log(this.userData.username, this.userData.password);
-            const data=api.login(this.userData);
+             const data= await api.login(this.userData);
             console.log(data);
-            
         },
       },
     }
