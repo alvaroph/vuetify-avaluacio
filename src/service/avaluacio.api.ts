@@ -1,7 +1,8 @@
 export default class AvaluacioApiService{
+[x: string]: any;
 
     private baseUrl = 'http://20.58.18.201/api.php/records';
-
+    private baseUrlLogin = 'http://20.58.18.201/api.php';
     private async fetchCall(url: string, method: string, body?: any) {
         const response = await fetch(url, {
             method,
@@ -19,6 +20,21 @@ export default class AvaluacioApiService{
 
     async getAlumnos() {
         return await this.fetchCall(`${this.baseUrl}/ALUMNO`, 'GET')
+    }
+
+    async createAlumno(body: any) {
+        return await this.fetchCall(`${this.baseUrl}/ALUMNO`, 'POST',body)
+    }
+    async login(body: any) {
+        return await this.fetchCall(`${this.baseUrlLogin}/login`, 'POST',body)
+    }
+
+    async removeAlumno(id: number) {
+        return await this.fetchCall(`${this.baseUrl}/ALUMNO/${id}`, 'DELETE')
+    }
+
+    async getModulos() {
+        return await this.fetchCall(`${this.baseUrl}/MODULO`, 'GET')
     }
 
     async getAlumnosNotas() {
@@ -39,4 +55,4 @@ export default class AvaluacioApiService{
     }
 }
 
-export const avaluacioApi = new AvaluacioApiService()
+export const api = new AvaluacioApiService()

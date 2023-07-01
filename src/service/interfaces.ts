@@ -7,6 +7,13 @@ export interface TActividad {
     uf: number; 
 }
 
+export interface TModulo{
+    id: number;
+    nombre: string;
+    ciclo:string;
+    codigo:string;
+}
+
 export interface TAlumnoActividad{
     id: number;
     id_alumno: number;

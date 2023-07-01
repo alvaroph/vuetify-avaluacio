@@ -1,5 +1,5 @@
 import {TAlumno, TActividad} from './interfaces';
-import {avaluacioApi} from './api/avaluacio.api';
+import {api} from '@/service/avaluacio.api';
 
 export default class Calculos{
 
@@ -18,7 +18,7 @@ export default class Calculos{
 
      async getAlumnos(){
         return new Promise((resolve) => {
-             avaluacioApi.getAlumnos().then((datos) => {
+             api.getAlumnos().then((datos) => {
                 this.alumnos = datos;
                 console.log(datos);
                 resolve(datos);

@@ -23,10 +23,10 @@
 <script lang="ts">
 
 
-  import {TAlumno, TActividad} from '../components/interfaces';
+  import {TAlumno, TActividad} from '@/service/interfaces';
   import CajaNota from '../components/CajaNota.vue';
   import  { defineComponent } from "vue";
-  import {avaluacioApi} from '../components/api/avaluacio.api';
+  import {api} from '@/service/avaluacio.api';
 
   export default defineComponent({
     components: {
@@ -41,11 +41,11 @@
     } }
     ,created() {
       console.log('created')
-      avaluacioApi.getAlumnosNotas().then((alumnos) => {
+      api.getAlumnosNotas().then((alumnos) => {
         this.alumnos = alumnos.records;
       });
 
-        avaluacioApi.getActividades().then((actividades) => {
+        api.getActividades().then((actividades) => {
         this.actividades = actividades.records;
        });
       

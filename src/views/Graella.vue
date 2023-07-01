@@ -26,10 +26,10 @@
 </template>
 
 <script lang="ts">
-  import {TAlumno, TActividad, TRa, TRActividad} from '../components/interfaces';
+  import {TAlumno, TActividad, TRa, TRActividad} from '@/service/interfaces';
   import CajaPct from '../components/CajaPct.vue';
   import  { defineComponent } from "vue";
-  import {avaluacioApi} from '../components/api/avaluacio.api';
+  import {api} from '@/service/avaluacio.api';
 
   export default defineComponent({
     components: {
@@ -51,10 +51,10 @@
     // }
     ,created() {
       console.log('created')
-      avaluacioApi.getRaActividad().then((pcts) => {
+      api.getRaActividad().then((pcts) => {
         this.ras = pcts.records;
 
-              avaluacioApi.getActividades().then((actividades) => {
+              api.getActividades().then((actividades) => {
               this.actividades = actividades.records;
 
                     this.ras.forEach((ra: TRa) => {

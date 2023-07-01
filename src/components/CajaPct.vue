@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts">
-    import {TAlumno, TActividad } from './interfaces';
+    import {TAlumno, TActividad } from '@/service/interfaces';
     import { defineComponent } from 'vue';
     import type { PropType } from 'vue';
-    import {avaluacioApi} from './api/avaluacio.api';
+    import {api} from '@/service/avaluacio.api';
 
     export default defineComponent({
 
@@ -40,7 +40,7 @@
     methods: {
         actualizaDato(){
             console.log("actualizaDatos")
-            avaluacioApi.setPorcentajeActividades({
+            api.setPorcentajeActividades({
                                 "id": this.id_nota,
                                 "id_ra": this.ra,
                                 "id_actividad": this.actividad.id,

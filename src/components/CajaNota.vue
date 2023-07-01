@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts">
-    import {TAlumno, TActividad} from './interfaces';
+    import {TAlumno, TActividad} from '@/service/interfaces';
     import { defineComponent } from 'vue';
     import type { PropType } from 'vue';
-    import {avaluacioApi} from './api/avaluacio.api';
+    import {api} from '@/service/avaluacio.api';
 
     export default defineComponent({
 
@@ -50,7 +50,7 @@
             //si la nota estaba puesta, habrá que hacer un PUT
 
 
-            avaluacioApi.setAlumnoActividades({
+            api.setAlumnoActividades({
                                 "id": this.getNota()[1],
                                 "id_alumno": this.alumno.id,
                                 "id_actividad": this.actividad.id,

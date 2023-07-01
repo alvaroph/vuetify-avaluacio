@@ -30,6 +30,28 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/login',
+    //component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import(/* webpackChunkName: "home" */ '../views/Login.vue'),
+      },
+    ],
+  },
+  {
+    path: '/alumnes',
+    //component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '/alumnes',
+        name: 'Alumnes',
+        component: () => import(/* webpackChunkName: "home" */ '../views/CrudAlumnos.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
