@@ -8,6 +8,7 @@ export default class AvaluacioApiService{
             method,
             headers: {
                 'Content-Type': 'application/json',
+                'X-API-Key' : '02c042aa-c3c2-4d11-9dae-1a6e230ea95e'
             },
             body: JSON.stringify(body),
         })
