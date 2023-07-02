@@ -81,7 +81,7 @@
   </template>
   <script lang="ts">
   import {api} from '@/service/avaluacio.api';
-
+  import { useAppStore } from '@/store/app';
     export default {
       data: () => ({
         visible: false,
@@ -93,9 +93,27 @@
       methods: {
         loginUser: async function(){
           console.log(this.userData.username, this.userData.password);
-             const data= await api.login(this.userData);
+           /*  const data= await api.login(this.userData);
             console.log(data);
-        },
-      },
+            if (data.status == 200) {
+            
+              const store = useAppStore();
+              store.login(data);
+              this.$router.push('/dashboard');
+            }       */
+            api.login(this.userData).then((data) => {
+              console.log(data);
+              console.log("aqui llego");
+              
+              if (data.code == undefined) {
+                console.log("aqui lno");
+                
+                const store = useAppStore();
+                store.login(data);
+                this.$router.push('/dashboard');
+              }
+            });     
+      }
     }
+}
   </script>

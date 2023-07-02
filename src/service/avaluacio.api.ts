@@ -1,8 +1,8 @@
 export default class AvaluacioApiService{
 [x: string]: any;
 
-    private baseUrl = 'http://20.58.18.201/api.php/records';
-    private baseUrlLogin = 'http://20.58.18.201/api.php';
+    private baseUrl = 'https://avaluacio.uksouth.cloudapp.azure.com/api.php/records';
+    private baseUrlLogin = 'https://avaluacio.uksouth.cloudapp.azure.com/api.php';
     private async fetchCall(url: string, method: string, body?: any) {
         const response = await fetch(url, {
             method,
