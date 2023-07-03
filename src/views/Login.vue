@@ -110,7 +110,7 @@
                 
                 const store = useAppStore();
                 store.login(data);
-                this.$router.push('/dashboard');
+               // this.$router.push('/dashboard');
               }
             });     
       }

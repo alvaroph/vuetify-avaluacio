@@ -11,5 +11,10 @@ export const useAppStore = defineStore('app', {
       this.usuarioLogueado = true
       this.usuarioActual = usuario
     }
+  },
+  getters: {
+    isLogged(): boolean{
+      return this.usuarioLogueado
+    },
   }
 })
