@@ -8,6 +8,9 @@
     <v-btn variant="outlined">
       <router-link to="/graella">Graella notes</router-link>
     </v-btn>
+    <v-btn variant="outlined">
+      <router-link to="/alumnes">Gestió alumnes</router-link>
+    </v-btn>
       </v-app-bar-title>
   </v-app-bar>
 </template>
