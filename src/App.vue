@@ -29,7 +29,7 @@ export default{
   }),
   computed: {
     logged() {
-      return useAppStore().isLogged;
+      return useAppStore().usuarioLogueado;
     },
   },
 };
