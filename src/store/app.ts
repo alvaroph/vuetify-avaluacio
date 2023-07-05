@@ -10,6 +10,10 @@ export const useAppStore = defineStore('app', {
     login(usuario: any) {
       this.usuarioLogueado = true
       this.usuarioActual = usuario
+    },
+    logout() {
+      this.usuarioLogueado = false;
+      this.usuarioActual = null;
     }
   },
   getters: {
@@ -17,5 +21,6 @@ export const useAppStore = defineStore('app', {
       return this.usuarioLogueado
     },
   },
+  
   persist: true,
 })
