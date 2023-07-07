@@ -20,13 +20,37 @@ export default class Calculos{
     }
     
     private transformarDatos(datos: TResultado[]): Tdatos[]{
+            let nAlumnos=0;
+            let nUf=0;
+
+            
             const datosTX=datos.reduce<Tdatos[]>((acc: Tdatos[],  item:TResultado) => {
               const newArray=acc;
               console.table(newArray)
-              //si ya hay algo en el array y coincide el id_alumno
-              if (acc.length>0 && acc[acc.length-1].id_alumno==item.id_alumno){
-                newArray[newArray.length-1].datos.push(item);
-                
+              //si ya hay algo en el array y coincide el id_alumno-> miramos si coincide el id_uf
+
+              if (nAlumnos>0 && acc[nAlumnos-1].id_alumno==item.id_alumno){
+                newArray[nAlumnos-1].datos.push(item);
+                if (acc[nAlumnos-1].id_uf==item.id_uf){ 
+                    const nuevaRa: TdatosRa = {
+                      id_ra: item.id_ra,
+                      notaRa: item.notaCalculada
+                    }
+                    newArray[nAlumnos-1].datosUf[nUf].notaUf+=item.notaCalculada * item.pct_UF / 100;
+                    newArray[nAlumnos-1].datosUf[nUf].datosRa.push(nuevaRa);
+                }
+                else{
+                    const nuevaUf: TdatosUf = {
+                      id_uf: item.id_uf,
+                      datosRa: [{
+                        id_ra: item.id_ra,
+                        notaRa: item.notaCalculada
+                      }] as TdatosRa[],
+                      notaUf: 0
+                    }
+                    newArray[nAlumnos-1].datosUf.push(nuevaUf);
+                    nUf++;
+              }
               }
               //si no coincide el id_alumno-> creamos un nuevo objeto
               else{
@@ -34,6 +58,7 @@ export default class Calculos{
                   id_alumno: item.id_alumno,
                   nombre: item.nombreAlumno,
                   apellidos: item.apellidos,
+                  id_uf: item.id_uf,
                   datos: [] as TResultado[],
                   datosUf: []
                 }
@@ -44,11 +69,13 @@ export default class Calculos{
                     id_ra: item.id_ra,
                     notaRa: item.notaCalculada
                   }] as TdatosRa[],
-                  notaUf: 0
+                  notaUf: item.notaCalculada * item.pct_UF / 100
                 }
                 nuevoAlumno.datosUf.push(nuevaUf);
                 nuevoAlumno.datos.push(item);         
                 newArray.push(nuevoAlumno);
+                nUf=0;
+                nAlumnos++;
               }
               return newArray;
         }, [] as Tdatos[]);

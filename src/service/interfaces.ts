@@ -84,6 +84,7 @@ export interface Tdatos {
     id_alumno: number,
     nombre: string,
     apellidos: string,
+    id_uf: number, //guarda la ultima uf procesada, no teien mucho sentido...
     datos:TResultado[]
     datosUf:TdatosUf[]
   }

@@ -8,9 +8,12 @@
                     <td>RA</td>
                     <td>RA</td>
                 </tr>
-            <tr v-for="(value) in resultadosProcesados">
-                    <td>{{ value.nombre }} {{ value.apellidos }}</td>
-                    <td v-for="item in value.datos">{{ item.id_ra }}-{{ item.notaCalculada }}</td>
+            <tr v-for="(itemAlumno) in resultadosProcesados">
+                    <td>{{ itemAlumno.nombre }} {{ itemAlumno.apellidos }}</td>
+                    <div v-for="itemUF in itemAlumno.datosUf">UF: {{ itemUF.id_uf }}-{{ itemUF.notaUf }}
+                        <td v-for="itemRA in itemUF.datosRa">RA: {{ itemRA.id_ra }}-{{ itemRA.notaRa }}                
+                        </td>
+                    </div>
             </tr>
         </v-table>
       
