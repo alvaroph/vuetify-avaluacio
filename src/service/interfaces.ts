@@ -46,3 +46,44 @@ export interface TRa {
     pct_uf: number;
     ACTIVIDAD_RA: TRActividad[]
 }
+
+export interface TArrayResultado{
+    [key:string]:TResultado[]
+
+}
+
+export interface TResultado {
+
+    nombreAlumno: string;
+    apellidos: string;
+    id_alumno: number;
+    media: number;
+    id_ra: number;
+    id_uf: number;
+    codRA: string;
+    nombreRA: string;
+    pct_UF: number;
+    nombreUF: string;
+    codUF: string;
+    sumPct: number;
+    notaCalculada: number;
+}
+ 
+export interface TdatosUf{
+    id_uf: number;
+    datosRa:TdatosRa[]
+    notaUf:number
+}
+
+export interface TdatosRa{
+    id_ra: number;
+    notaRa:number
+}
+
+export interface Tdatos {
+    id_alumno: number,
+    nombre: string,
+    apellidos: string,
+    datos:TResultado[]
+    datosUf:TdatosUf[]
+  }
