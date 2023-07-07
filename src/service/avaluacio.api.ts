@@ -15,6 +15,10 @@ export default class AvaluacioApiService{
         return response.json()
     }
 
+    async getResumAvaluacio() {
+        return await this.fetchCall(`${this.baseUrl}/RESUM_AVALUACIO?order=nombreAlumno&order=id_uf&order=id_ra`, 'GET')
+    }
+
     async getActividades() {
         return await this.fetchCall(`${this.baseUrl}/ACTIVIDAD`, 'GET')
     }

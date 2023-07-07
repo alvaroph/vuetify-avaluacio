@@ -30,14 +30,6 @@
           <v-btn color="primary" v-on:click="addAlumno">
           Dar de alta
         </v-btn>
-          <!--v-autocomplete
-            :items="books"
-            color="white"
-            item-value="id"
-            item-text="name"
-            label="Books"
-            v-model="bookLending.selectedBook"
-          ></!--v-autocomplete-->
           
         </v-col>
         <v-col sm="8">
@@ -98,56 +90,29 @@
         responseSuccess: false,
       };
     },
-    methods: {
+    methods: {  
+          readModuls: async function() {
+          const data = await api.getModulos();
+          this.modulos = data.records;
+        },
+          readAlumnos: async function() {
+          const data = await api.getAlumnos();
+          this.alumnos = data.records;
+        },
+
+        addAlumno: async function(){
+          console.log("Añado alumno" + this.nuevoAlumno.nombre);
+          await api.createAlumno(this.nuevoAlumno);
+          this.readAlumnos();
+          this.responseSuccess = true;
+        },
+        updateAlumno: function(){},
+        removeAlumnos:async function(id:number){
+          console.log("Borro al alumno" + id);
       
-        readModuls: async function() {
-        const data = await api.getModulos();
-        this.modulos = data.records;
+          await api.removeAlumno(id);
+          this.readAlumnos();
       },
-
-        readAlumnos: async function() {
-        const data = await api.getAlumnos();
-        this.alumnos = data.records;
-      },
-
-      addAlumno: async function(){
-        console.log("Añado alumno" + this.nuevoAlumno.nombre);
-        await api.createAlumno(this.nuevoAlumno);
-        this.readAlumnos();
-        this.responseSuccess = true;
-      },
-      updateAlumno: function(){},
-      removeAlumnos:async function(id:number){
-        console.log("Borro al alumno" + id);
-    
-        await api.removeAlumno(id);
-        this.readAlumnos();
-    },
-    /*  lendBook: async function() {
-        console.log("Lending Books");
-        let selectedIds = [];
-        this.selectedBooks.forEach((book) => {
-          selectedIds.push(book.id);
-        });
-        console.log("Lending Books " + selectedIds);
-        const request = {
-          bookIds: selectedIds,
-          memberId: this.bookLending.memberId,
-        };
-        const bookLendingResponse = await api.lendBook(request);
-        console.log(bookLendingResponse);
-        this.responseSuccess = true;
-        this.selectedBooks = [];
-        this.bookLending.selectedBook = 0;
-        this.bookLending.memberId = "";
-      },
-     
-      removeBook: function(bookId) {
-        console.log("Removing Book " + bookId);
-        this.selectedBooks = this.selectedBooks.filter(
-          (book) => book.id != bookId
-        );
-      },*/
     },
     mounted() {
       this.readAlumnos();

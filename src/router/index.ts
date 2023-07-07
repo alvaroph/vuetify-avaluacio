@@ -43,12 +43,23 @@ const routes = [
   },
   {
     path: '/alumnes',
-    //component: () => import('@/layouts/default/Default.vue'),
+    component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
         path: '/alumnes',
         name: 'Alumnes',
         component: () => import(/* webpackChunkName: "home" */ '../views/CrudAlumnos.vue'),
+      },
+    ],
+  },
+  {
+    path: '/resultats',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '/resultats',
+        name: 'Resultats',
+        component: () => import(/* webpackChunkName: "home" */ '../views/Resultats.vue'),
       },
     ],
   },

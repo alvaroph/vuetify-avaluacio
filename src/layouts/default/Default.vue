@@ -1,6 +1,4 @@
 <template>
-  <v-app>
-
     <v-card>
     <v-layout>
       <default-bar />
@@ -32,10 +30,7 @@
       </v-main>
     </v-layout>
   </v-card>
-   
-
-   
-  </v-app>
+ 
 </template>
 
 <script lang="ts" >
