@@ -71,20 +71,21 @@ export interface TResultado {
  
 export interface TdatosUf{
     id_uf: number;
+    cod_uf:string;
     datosRa:TdatosRa[]
     notaUf:number
+    progresUF:number
 }
 
 export interface TdatosRa{
-    id_ra: number;
-    notaRa:number
+    cod_RA:string;
+    notaRa:number;
+    pctUF:number;
 }
 
 export interface Tdatos {
     id_alumno: number,
     nombre: string,
     apellidos: string,
-    id_uf: number, //guarda la ultima uf procesada, no teien mucho sentido...
-    datos:TResultado[]
     datosUf:TdatosUf[]
   }

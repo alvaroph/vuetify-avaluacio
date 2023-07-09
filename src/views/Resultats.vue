@@ -1,22 +1,23 @@
 <!-- eslint-disable vue/require-v-for-key -->
 <template>
     <div>
-        <v-table>
-                <tr>
-                    <td>Alumne</td>
-                    <td>RA</td>
-                    <td>RA</td>
-                    <td>RA</td>
-                </tr>
-            <tr v-for="(itemAlumno) in resultadosProcesados">
-                    <td>{{ itemAlumno.nombre }} {{ itemAlumno.apellidos }}</td>
-                    <div v-for="itemUF in itemAlumno.datosUf">UF: {{ itemUF.id_uf }}-{{ itemUF.notaUf }}
-                        <td v-for="itemRA in itemUF.datosRa">RA: {{ itemRA.id_ra }}-{{ itemRA.notaRa }}                
-                        </td>
-                    </div>
-            </tr>
-        </v-table>
-      
+        <v-row v-for="(itemAlumno,index) in resultadosProcesados" v-bind:key="index">
+               <v-row> <h2>{{ itemAlumno.nombre }} {{ itemAlumno.apellidos }}</h2></v-row>
+                <v-row>
+                    <v-col-auto v-for="(itemUF,index) in itemAlumno.datosUf" v-bind:key="index">
+                        <v-card>
+                            <v-card-item>
+                                <v-card-title>{{ itemUF.cod_uf }}<v-chip class="ma-2" color="primary">{{ Math.round(itemUF.notaUf * 100) / 100 }}</v-chip><v-progress-circular :model-value="itemUF.progresUF"></v-progress-circular></v-card-title>
+                            </v-card-item>
+
+                            <v-card-text>
+                                <div class="divRA" v-for="itemRA in itemUF.datosRa">{{ itemRA.cod_RA }}&nbsp;<strong>{{ itemRA.notaRa }}</strong> <small>({{ itemRA.pctUF }}%)</small>               
+                                </div>
+                            </v-card-text>
+                        </v-card>
+                    </v-col-auto>
+                </v-row>
+        </v-row>
     </div>
 </template>
 
@@ -45,5 +46,14 @@
 </script>
 
 <style scoped>
+.divRA{
+    border: black solid 1px;
+    background-color: darkcyan;
+}
 
+.divUF{
+    border: black solid 1px;
+    float: left;
+    background-color: aquamarine;
+}
 </style>

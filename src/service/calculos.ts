@@ -3,7 +3,12 @@ import {TAlumno, TActividad, TResultado, Tdatos, TdatosUf, TdatosRa} from './int
 import {api} from '@/service/avaluacio.api';
 
 
+class RA implements TdatosRa{
+    constructor(public cod_RA:string, public notaRa:number, public pctUF:number ){
 
+    }
+
+}
 
 export default class Calculos{
 
@@ -30,27 +35,23 @@ export default class Calculos{
               //si ya hay algo en el array y coincide el id_alumno-> miramos si coincide el id_uf
 
               if (nAlumnos>0 && acc[nAlumnos-1].id_alumno==item.id_alumno){
-                newArray[nAlumnos-1].datos.push(item);
-                if (acc[nAlumnos-1].id_uf==item.id_uf){ 
-                    const nuevaRa: TdatosRa = {
-                      id_ra: item.id_ra,
-                      notaRa: item.notaCalculada
-                    }
+                if (newArray[nAlumnos-1].datosUf[nUf].id_uf==item.id_uf){             
+                    const nuevaRa=new RA(item.codRA, item.notaCalculada, item.pct_UF);
                     newArray[nAlumnos-1].datosUf[nUf].notaUf+=item.notaCalculada * item.pct_UF / 100;
+                    newArray[nAlumnos-1].datosUf[nUf].progresUF+= item.pct_UF ;
                     newArray[nAlumnos-1].datosUf[nUf].datosRa.push(nuevaRa);
                 }
                 else{
                     const nuevaUf: TdatosUf = {
                       id_uf: item.id_uf,
-                      datosRa: [{
-                        id_ra: item.id_ra,
-                        notaRa: item.notaCalculada
-                      }] as TdatosRa[],
-                      notaUf: 0
+                      cod_uf: item.codUF,
+                      datosRa: [new RA(item.codRA, item.notaCalculada, item.pct_UF)] as TdatosRa[],
+                      notaUf: (item.notaCalculada * item.pct_UF) / 100,
+                      progresUF: item.pct_UF 
                     }
                     newArray[nAlumnos-1].datosUf.push(nuevaUf);
                     nUf++;
-              }
+                }
               }
               //si no coincide el id_alumno-> creamos un nuevo objeto
               else{
@@ -58,21 +59,17 @@ export default class Calculos{
                   id_alumno: item.id_alumno,
                   nombre: item.nombreAlumno,
                   apellidos: item.apellidos,
-                  id_uf: item.id_uf,
-                  datos: [] as TResultado[],
                   datosUf: []
                 }
 
                 const nuevaUf: TdatosUf = {
                   id_uf: item.id_uf,
-                  datosRa: [{
-                    id_ra: item.id_ra,
-                    notaRa: item.notaCalculada
-                  }] as TdatosRa[],
-                  notaUf: item.notaCalculada * item.pct_UF / 100
+                  cod_uf: item.codUF,
+                  datosRa: [new RA(item.codRA, item.notaCalculada, item.pct_UF)] as TdatosRa[],
+                  notaUf: item.notaCalculada * item.pct_UF / 100,
+                  progresUF: item.pct_UF 
                 }
                 nuevoAlumno.datosUf.push(nuevaUf);
-                nuevoAlumno.datos.push(item);         
                 newArray.push(nuevoAlumno);
                 nUf=0;
                 nAlumnos++;
