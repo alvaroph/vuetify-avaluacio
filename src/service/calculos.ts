@@ -1,17 +1,12 @@
-
 import {TAlumno, TActividad, TResultado, Tdatos, TdatosUf, TdatosRa} from './interfaces';
 import {api} from '@/service/avaluacio.api';
 
-
 class RA implements TdatosRa{
     constructor(public cod_RA:string, public notaRa:number, public pctUF:number ){
-
     }
-
 }
 
 export default class Calculos{
-
     private alumnos: TAlumno[];
     private actividades: TActividad[];
     private resultados :  TResultado[] ;
@@ -27,7 +22,6 @@ export default class Calculos{
     private transformarDatos(datos: TResultado[]): Tdatos[]{
             let nAlumnos=0;
             let nUf=0;
-
             
             const datosTX=datos.reduce<Tdatos[]>((acc: Tdatos[],  item:TResultado) => {
               const newArray=acc;
@@ -61,7 +55,6 @@ export default class Calculos{
                   apellidos: item.apellidos,
                   datosUf: []
                 }
-
                 const nuevaUf: TdatosUf = {
                   id_uf: item.id_uf,
                   cod_uf: item.codUF,
