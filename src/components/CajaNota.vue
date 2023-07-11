@@ -1,6 +1,6 @@
 <template>
     <!--input type="text" @change="actualitzaNota" :class="classObject" v-model="notaActual"-->
-    <v-text-field @change="actualitzaNota"   density="compact" :class="classObject" v-model="notaActual">
+    <v-text-field @change="actualitzaNota"  variant="outlined" density="compact" :class="classObject" v-model="notaActual">
     </v-text-field>
 </template>
 
@@ -20,16 +20,16 @@
     computed: {
         classObject() {
             return {
-            'pass': this.notaActual>= 5,
-            'fail': this.notaActual< 5,
-          //  'missing': this.notaActual=='n.d.' 
+            'pass compactForm': this.notaActual>= 5,
+            'fail compactForm': this.notaActual< 5,
+            'missing compactForm': this.notaActual==0 
            }
         },
         nota(): any{
             const nota = this.alumno.ALUMNO_ACTIVIDAD.find(
                     (alumnoActividad) => alumnoActividad.id_actividad.id === this.actividad.id
             );
-            return nota ? nota.nota : "n.d.";
+            return nota ? nota.nota : "";
         }
         }
         ,
@@ -55,13 +55,13 @@
                                 "id_alumno": this.alumno.id,
                                 "id_actividad": this.actividad.id,
                                 "nota": this.notaActual
-                            },(this.getNota()[0]=="n.d.") ? "POST" : "PUT");
+                            },(this.getNota()[0]=="") ? "POST" : "PUT");
         },
       getNota(): any {
         const nota = this.alumno.ALUMNO_ACTIVIDAD.find(
           (alumnoActividad) => alumnoActividad.id_actividad.id === this.actividad.id
         );
-        return nota ? [nota.nota,nota.id ] :  ["n.d.",0];
+        return nota ? [nota.nota,nota.id ] :  ["",0];
       },
     },
     created() {
@@ -80,5 +80,9 @@
 }
 .missing :deep(.v-field__field){
     background-color: #d3d3d3;
+}
+.compactForm {
+    transform: scale(0.75);
+    transform-origin: left;
 }
 </style>

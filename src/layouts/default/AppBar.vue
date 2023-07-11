@@ -1,19 +1,12 @@
 <template>
+  
   <v-app-bar flat>
     <v-app-bar-title>
-      <v-icon icon="mdi-circle-slice-6" />
-      <v-btn >
-        <router-link to="/">Portada</router-link>
-    </v-btn>
-    <v-btn >
-      <router-link to="/graella">Graella notes</router-link>
-    </v-btn>
-    <v-btn >
-      <router-link to="/alumnes">Gestió alumnes</router-link>
-    </v-btn>
-    <v-btn >
-      <router-link to="/resultats">Resultats</router-link>
-    </v-btn>
+      <v-icon icon="mdi-circle-slice-6" />   
+        <router-link to="/"><v-btn>Portada</v-btn></router-link>
+        <router-link to="/graella"> <v-btn >Graella notes</v-btn></router-link>
+        <router-link to="/alumnes"><v-btn >Gestió alumnes</v-btn></router-link>
+        <router-link to="/resultats"><v-btn >Resultats</v-btn></router-link>
       </v-app-bar-title>
   </v-app-bar>
 </template>

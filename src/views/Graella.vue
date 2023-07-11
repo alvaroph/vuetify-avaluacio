@@ -4,15 +4,15 @@
     <thead>
       <tr>
         <th>RA</th>
-        <th v-for="actividad in actividades" v-bind:key="actividad.id">
+        <th class="text-caption" v-for="actividad in actividades" v-bind:key="actividad.id">
           {{ actividad.nombre }}
         </th>
       </tr>
       </thead>
         <tr v-for="(fila) in matriz" v-bind:key="fila.codigo">
-        <th> {{ fila.codigo }}</th>
+        <th class="text-caption"> {{ fila.codigo }}</th>
         <td v-for="(actual,index)  in fila.pcts" v-bind:key="index">
-          <caja-pct :pct="actual.pct" :id_nota="actual.id_nota" :ra="fila.id" :actividad="actividades[index]"></caja-pct>         
+          <caja-pct :pct="actual.pct" :completo="pctCompleto(fila)" :id_nota="actual.id_nota||NaN" :ra="fila.id" :actividad="actividades[index]"></caja-pct>         
         </td>
       <!--td>{{totalPctRA(1)}}</!--td-->
       </tr>
@@ -43,39 +43,38 @@
       ras: [] as TRa[],
       matriz: [] as any[]
     } }
-  //NO FUNCIONA EL COMPUTER
-    // ,computed: {
-    //  totalPctRA(i:any): any {
-    //         return (this.matriz[i].pcts.reduce((total: number , item :any) => total + item.porcentaje, 0))
-    //    }
-    // }
-    ,created() {
-      console.log('created')
-      api.getRaActividad().then((pcts) => {
-        this.ras = pcts.records;
-
-              api.getActividades().then((actividades) => {
-              this.actividades = actividades.records;
-
-                    this.ras.forEach((ra: TRa) => {
-                    console.log("paso");        
-                    let pctTemp= this.actividades.map((actividad: any) => {
-                      const pct = ra.ACTIVIDAD_RA.find(
-                                (raActividad : TRActividad) => raActividad.id_actividad.id === actividad.id
-                        );           
-                        return pct ? {pct: pct.porcentaje , id_nota:pct.id} : -1;
-                    });
-                    this.matriz.push({codigo: ra.codigo , id:ra.id , pcts: pctTemp});
-            });
-
-            });
+ 
+    ,methods: {
+      pctCompleto(fila:any): boolean {
+            console.log(("hola"));
             
-       
+            const res= (fila.pcts.reduce((total: number , item :any) =>  total + item.pct , 0))==100;
+            console.log(res);
+            return res;
+       }
+    }
+    ,async created() {
+      console.log('created')
+      //ESTO HAY QUE REFACTORIZARLO, HAY 3 LLAMADAS ASYNC SEGUIDAS
+      //ESTAMOS HACIENDO CALCULOS DENTRO DE UN COMPONENTE, HAYQ EU LLEVAR LA LOGICA A OTRO SITIO
+      await api.getRaActividad().then((pcts) => {
+        this.ras = pcts.records;
+      });
+      await api.getActividades().then((actividades) => {
+        this.actividades = actividades.records;
       });
 
-       
+      this.ras.forEach((ra: TRa) => {
+        console.log("paso");        
+        let pctTemp= this.actividades.map((actividad: any) => {
+          const pct = ra.ACTIVIDAD_RA.find(
+                    (raActividad : TRActividad) => raActividad.id_actividad.id === actividad.id
+            );           
+            return pct ? {pct: pct.porcentaje , id_nota:pct.id} : -1;
+        });
+        this.matriz.push({codigo: ra.codigo , id:ra.id , pcts: pctTemp});
+      });
      
-       
     }
  });
 </script>

@@ -5,6 +5,7 @@ export interface TActividad {
     nombre: string;
     descripcion: string;
     uf: number; 
+    ACTIVIDAD_RA: any[];
 }
 
 export interface TModulo{

@@ -1,6 +1,7 @@
 <template>
     
-    <v-text-field   @change="actualizaDato" density="compact" :class="classObject" v-model="pctActual">
+    <v-text-field   @change="actualizaDato" density="compact" :class="classObject" v-model="pctActual"  persistent-clear
+   clearable @click:clear="limpiarCaja">
     </v-text-field>
 </template>
 
@@ -18,12 +19,15 @@
         id_nota: {type: Number , required: true},
         actividad: {type: Object as PropType<TActividad>, required: true},
         ra: {type: Number, required: true},   
+        completo: {type: Boolean, required: true},
     },
     computed: {
         classObject() {
                 return {
-                'ok': this.pctActual >= 0 && this.pctActual <= 100,
-                'error': this.pctActual< 0 || this.pctActual > 100,
+                'ok compactForm': this.pctActual > 0 && this.pctActual <= 100,
+                'error compactForm': this.pctActual< 0 || this.pctActual > 100,
+                'missing compactForm': this.pctActual== 0 ,
+                
                 }
             }
         }
@@ -47,6 +51,11 @@
                                 "porcentaje": this.pctActual
                             },(this.pct==undefined) ? "POST" : "PUT");
         },
+        limpiarCaja(){
+            api.borraPorcentajeActividades({
+                                "id": this.id_nota
+                            });
+        }
     },
     created() {
       this.pctActual = this.pct;
@@ -61,5 +70,12 @@
 }
 .error :deep(.v-field__field){
     background-color: #e64747;
+}
+.missing :deep(.v-field__field){
+    background-color: #d3d3d3;
+}
+.compactForm {
+    transform: scale(0.75);
+    transform-origin: left;
 }
 </style>

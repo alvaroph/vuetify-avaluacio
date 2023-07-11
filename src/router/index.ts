@@ -53,6 +53,17 @@ const routes = [
     ],
   },
   {
+    path: '/alumnes2',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '/alumnes2',
+        name: 'Alumnes',
+        component: () => import(/* webpackChunkName: "home" */ '../views/GestioAlumnes.vue'),
+      },
+    ],
+  },
+  {
     path: '/resultats',
     component: () => import('@/layouts/default/Default.vue'),
     children: [

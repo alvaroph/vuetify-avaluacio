@@ -23,6 +23,11 @@ export default class AvaluacioApiService{
         return await this.fetchCall(`${this.baseUrl}/ACTIVIDAD`, 'GET')
     }
 
+    async getActividadesRa() {
+        return await this.fetchCall(`${this.baseUrl}/ACTIVIDAD?join=ACTIVIDAD_RA,RA`, 'GET')
+    }
+
+
     async getAlumnos() {
         return await this.fetchCall(`${this.baseUrl}/ALUMNO`, 'GET')
     }
@@ -57,6 +62,9 @@ export default class AvaluacioApiService{
     
     async setPorcentajeActividades(body: any,method: string) {
         return await this.fetchCall(`${this.baseUrl}/ACTIVIDAD_RA${(method=="PUT")? '/'+body.id:''}`,method, body)
+    }
+    async borraPorcentajeActividades(body: any) {
+        return await this.fetchCall(`${this.baseUrl}/ACTIVIDAD_RA/${body.id}`,"DELETE", body)
     }
 }
 

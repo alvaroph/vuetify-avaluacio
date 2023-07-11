@@ -68,6 +68,8 @@
           </v-simple-table>
         </v-col>
       </v-row>
+
+      
     </v-container>
   </template>
   <script lang="ts">
@@ -86,7 +88,6 @@
         },
         modulos: [] as TModulo[],
         alumnos: [] as TAlumno[],
-        selectedBooks: [],
         responseSuccess: false,
       };
     },
